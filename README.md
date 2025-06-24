@@ -1,0 +1,4 @@
+The three provided code files coorespond to the three simulation examples presented in the paper "Discrete-Time Distributed Optimal Formation Algorithms for Multi-Agent Systems with Nonlinear Inequality Constraints". By simply running the code, one can reproduce the exact results presented in the paper.
+1. In Example 1 and 2, since the unmatched phenomenon doesn't exist, the proposed PDC-ADMM naturally degenerates to DC-ADMM.
+2. To ensure reproducibility, all experiments were conducted using the commonly adopted random seed 42. In our simulations, the random seed affects both the initialization of iterative variables and the construction of the communication network among agents. Since the selection range of step-sizes depends on the specific topology, we kindly recommend slightly tuning the step-sizes when using different random seeds.
+3. For any questions or clarifications, feel free to contact me via email at 3220241150@bit.edu.cn
