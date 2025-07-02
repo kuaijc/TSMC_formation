@@ -27,9 +27,9 @@ def hungarian(cost_f):
 
 # constraint function g(.)
 def g_function(position, iii):
-    vector_g = np.array([1, -1] + [0 for _ in range(N - 2)])
-    pow_g = -np.dot(position.T, vector_g)
-    return 1 / (1 + pow(math.e, pow_g)) - 1 / 2
+    r_i = safety_radius[iii]
+    p_i = obstacle_position[iii]
+    return r_i ** 2 - np.linalg.norm(position - p_i) ** 2
 
 
 # used to calculate a gradient
@@ -173,8 +173,13 @@ if __name__ == '__main__':
     matched_location_m = np.zeros((N, N))
     for i in range(N):
         for j in range(N):
-            if optimal_assignment[i][j] == 1:
+            if x[i][j] == 1:
                 matched_location_m[i] = location_relation_m[j]
+
+    # define the parameters regarding inequality constraints g(di)
+    obstacle_position = np.array([[random.uniform(-1, 1), random.uniform(-1, 1)] + [0 for _ in range(N - 2)]
+                                  for _ in range(N)])   # the obstacle center
+    safety_radius = [random.uniform(0, 0.1) for _ in range(N)]  # the radius of safety margin
 
     # the second problem: find optimal reference center d0*
     d_0 = np.array([[round(random.uniform(0, 1), 2) for _ in range(N)] for _ in range(N)])
@@ -275,7 +280,7 @@ if __name__ == '__main__':
     plt.xticks(fontsize=16)
     plt.yticks(fontsize=16)
     plt.legend(prop={'family': 'Times New Roman', 'size': 16}, loc='upper right', bbox_to_anchor=(1.0, 1.0))
-    # plt.savefig(r'D:\学校\硕士\大四下\编队匹配论文\第一次大修\picture\formation_1.pdf', format='pdf')
+    # plt.savefig(r'D:\学校\硕士\大四下\编队匹配论文\第一次大修\picture\resubmit\formation_1.pdf', format='pdf')
     plt.show()
 
     # visualization the raltive error
@@ -307,6 +312,6 @@ if __name__ == '__main__':
     plt.legend(prop={'family': 'Times New Roman', 'size': 15}, loc='upper right', bbox_to_anchor=(1.0, 1.0))
 
     plt.tight_layout()
-    # plt.savefig(r'D:\学校\硕士\大四下\编队匹配论文\第一次大修\picture\error_1.pdf', format='pdf')
+    # plt.savefig(r'D:\学校\硕士\大四下\编队匹配论文\第一次大修\picture\resubmit\error_1.pdf', format='pdf')
     plt.show()
 
